@@ -60,7 +60,7 @@ export const Header = () => {
                   <Link to={"/certs"}>Certificados</Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to={"/Nosotros"}>Nosostros</Link>
+                  <Link to={"/Nosotros"}>Nosotros</Link>
                 </Nav.Link>
                 <Nav.Link>
                   <Link to={"/blog"}>Blog</Link>
