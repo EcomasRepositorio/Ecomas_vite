@@ -1,17 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from "../dashboard/LoginButton";
 import LogoutButton from "../dashboard/LogoutButton";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 export const Header = () => {
+  const { isAuthenticated, user } = useAuth0();
   const expand = "lg";
+  console.log(isAuthenticated)
+  /*
+  const userName = user.name;
+  const userEmail =
+
+
+  useEffect(() => {
+    
+    if (isAuthenticated) {
+      
+      //console.log("Usuario autenticado:", user);
+      //const userName = user.name;
+      //const userEmail = user.email;
+      //const userPicture = user.picture;
+    }
+  })
+*/
   return (
     <>
       <Nav style={{ backgroundColor: "#0039a6" }}>
