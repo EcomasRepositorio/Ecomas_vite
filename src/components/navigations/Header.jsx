@@ -80,10 +80,10 @@ export const Header = () => {
                 </div>
                 <NavDropdown title="Usuario">
                   <NavDropdown.Item>
-                    <LoginButton></LoginButton>
+                    <LoginButton/>
                   </NavDropdown.Item>
                   <NavDropdown.Item>
-                    <LogoutButton></LogoutButton>
+                    <LogoutButton/>
                   </NavDropdown.Item>
                   <NavDropdown.Item className="font-bold uppercase"><Link to={"/students"}>administración</Link></NavDropdown.Item>
                 </NavDropdown>
