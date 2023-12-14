@@ -78,7 +78,7 @@ export const Header = () => {
                     <img src="src\assets\SVG\tiktok.svg"></img>
                   </NavLink>
                 </div>
-                <NavDropdown title="Usuario">
+                <NavDropdown title="login">
                   <NavDropdown.Item>
                     <LoginButton/>
                   </NavDropdown.Item>

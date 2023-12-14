@@ -8,9 +8,10 @@ import { Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { Link } from "react-router-dom";
 
 export const Students = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   
   const [data, setData] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
@@ -32,6 +33,15 @@ export const Students = () => {
   const [shouldReloadData, setShouldReloadData] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
+/*
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("Usuario autenticado:", user);
+      // const userName = user.name;
+      // const userEmail = user.email;
+      // const userPicture = user.picture;
+    }
+  })*/
 
   useEffect(() => {
     setIsLoading(true);
@@ -133,7 +143,7 @@ export const Students = () => {
 
     const updatedStudents = data.filter(
       (student) => student.Codigo !== studentCodigo
-    );
+    );  
     setData(updatedStudents);
     setFilteredStudents(updatedStudents);
   };
@@ -167,9 +177,13 @@ export const Students = () => {
   };
   
   
-
+/*
   if (!isAuthenticated) {
     return <div className="flex justify-center align-middle text-2xl p-4"><h1 className="upercase font-bold p-1">No tienes acceso a esta página.</h1><img className="h-10" src="src\assets\IMG\duke_java.png"></img></div>;
+  }*/
+  if (!isAuthenticated || (isAuthenticated && user.email !== 'cimade.educacion@gmail.com')) {
+    return <div className="flex justify-center align-middle text-2xl p-4"><h1 className="upercase font-bold p-1">No tienes acceso a esta página.</h1><img className="h-10" src="src\assets\IMG\duke_java.png"></img></div>;
+  
   }
 
   return (
