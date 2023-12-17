@@ -194,58 +194,64 @@ export const Students = () => {
   }
 
   return (
-    <div style={{}}>
-    <NavDash />
-    <h2 className="font-semibold p-3 text-center text-5xl">Administración de estudiantes</h2>
-  
-    {isLoading ? (
-      <div className="flex justify-center align-middle"><img src="src\assets\loading.gif"></img></div>
-    ) : (
-      <div>
-        <Container>
-        <InputGroup>
-        <Form.Control
-          placeholder="Recipient's username"
-          aria-label="Recipient's username with two button addons"
-        />
-        <Button variant="outline-primary" onClick={() => setIsAddingStudent(true)}>Agregar estudiante</Button>
-        <Button variant="outline-primary" onClick={() => document.getElementById("importExcelInput").click()}>Agregar por excel</Button>
-      </InputGroup>
-        <input
-          type="file"
-          id="importExcelInput"
-          accept=".xls,.xlsx"
-          style={{ display: "none" }}
-          onChange={handleImportFromExcel}
-        />
-        </Container>
-        
-        {isAddingStudent && (
-          <StudentForm
-            student={newStudent}
-            onSave={handleAddStudent}
-            onCancel={handleCancel}
-          />
-        )}
-  
-        {isEditingStudent && selectedStudent && (
-          <StudentForm
-            student={newStudent}
-            onSave={handleAddStudent}
-            onCancel={handleCancel}
-          />
-        )}
-  
-  <StudentTable
-  students={filteredStudents}
-  onDelete={handleDeleteStudent}
-  onEdit={handleEditStudent}
-/>
+    <div>
+      <div ref={topOfPageRef}></div> {/* Ref para hacer scroll */}
+      <NavDash />
+      <h2 className="font-semibold p-3 text-center text-5xl">Administración estudiantes</h2>
 
-      </div>
-    )}
-  </div>
-  
+      {isLoading ? (
+        <div className="flex justify-center align-middle">
+          <img src="src\assets\loading.gif" alt="Loading" />
+        </div>
+      ) : (
+        <div>
+          <Container>
+            <InputGroup>
+              <Form.Control
+                placeholder="Recipient's username"
+                aria-label="Recipient's username with two button addons"
+              />
+              <Button variant="outline-primary" onClick={() => setIsAddingStudent(true)}>
+                Agregar estudiante
+              </Button>
+              <Button variant="outline-primary" onClick={() => document.getElementById("importExcelInput").click()}>
+              Agregar por excel
+              </Button>
+
+              </InputGroup>
+            <input
+              type="file"
+              id="importExcelInput"
+              accept=".xls,.xlsx"
+              style={{ display: "none" }}
+              onChange={handleImportFromExcel}
+            />
+          </Container>
+
+          {isAddingStudent && (
+            <StudentForm
+              student={newStudent}
+              onSave={handleAddStudent}
+              onCancel={handleCancel}
+            />
+          )}
+
+          {isEditingStudent && selectedStudent && (
+            <StudentForm
+              student={newStudent}
+              onSave={handleAddStudent}
+              onCancel={handleCancel}
+            />
+          )}
+
+          <StudentTable
+            students={filteredStudents}
+            onDelete={handleDeleteStudent}
+            onEdit={handleEditStudent}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 
