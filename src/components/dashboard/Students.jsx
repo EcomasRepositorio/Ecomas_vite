@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { StudentForm } from "./StudentForm";
 import { StudentTable } from "./StudentTable";
 import * as XLSX from "xlsx";
@@ -12,7 +12,9 @@ import { Link } from "react-router-dom";
 
 export const Students = () => {
   const { isAuthenticated, user } = useAuth0();
-  
+
+  const topOfPageRef = useRef(null); // Ref para hacer scroll
+
   const [data, setData] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,16 +34,6 @@ export const Students = () => {
   });
   const [shouldReloadData, setShouldReloadData] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-
-/*
-  useEffect(() => {
-    if (isAuthenticated) {
-      console.log("Usuario autenticado:", user);
-      // const userName = user.name;
-      // const userEmail = user.email;
-      // const userPicture = user.picture;
-    }
-  })*/
 
   useEffect(() => {
     setIsLoading(true);
@@ -70,11 +62,11 @@ export const Students = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Action successful:", data);
+        console.log("Acción exitosa:", data);
         setShouldReloadData(true);
       })
       .catch((error) => {
-        console.error("Error performing HTTP action:", error);
+        console.error("Error al realizar la acción HTTP:", error);
       });
   };
 
@@ -95,6 +87,9 @@ export const Students = () => {
       );
       setIsAddingStudent(false);
     }
+
+    // Hacer scroll hasta la parte superior de la página
+    topOfPageRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleEditStudent = (student) => {
@@ -111,6 +106,9 @@ export const Students = () => {
     });
     setSelectedStudent(student);
     setIsEditingStudent(true);
+
+    // Hacer scroll hasta la parte superior de la página
+    topOfPageRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleCancel = () => {
@@ -146,23 +144,25 @@ export const Students = () => {
     );  
     setData(updatedStudents);
     setFilteredStudents(updatedStudents);
+
+    // Hacer scroll hasta la parte superior de la página
+    topOfPageRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  
-  
+
   const handleImportFromExcel = (e) => {
     const file = e.target.files[0];
-  
+
     const reader = new FileReader();
     reader.onload = (e) => {
       const data = new Uint8Array(e.target.result);
       const workbook = XLSX.read(data, { type: "array" });
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const students = XLSX.utils.sheet_to_json(worksheet);
-  
+
       students.forEach((student) => {
         // Convertir la propiedad 'Fecha' a una cadena
         student.Fecha = String(student.Fecha);
-  
+
         // Enviar la solicitud HTTP al backend
         handleHttpAction(
           "https://ecomas.pe:4000/server/students/save",
@@ -170,75 +170,81 @@ export const Students = () => {
           student
         );
       });
-  
+
       setShouldReloadData(true);
     };
     reader.readAsArrayBuffer(file);
   };
-  
-  
-/*
-  if (!isAuthenticated) {
-    return <div className="flex justify-center align-middle text-2xl p-4"><h1 className="upercase font-bold p-1">No tienes acceso a esta página.</h1><img className="h-10" src="src\assets\IMG\duke_java.png"></img></div>;
-  }*/
+
   if (!isAuthenticated || (isAuthenticated && user.email !== 'cimade.educacion@gmail.com')) {
-    return <div className="flex justify-center align-middle text-2xl p-4"><h1 className="upercase font-bold p-1">No tienes acceso a esta página.</h1><img className="h-10" src="src\assets\IMG\duke_java.png"></img></div>;
-  
+    return (
+      <div className="flex justify-center align-middle text-2xl p-4">
+        <h1 className="upercase font-bold p-1">No tienes acceso a esta página.</h1>
+        <img className="h-10" src="src\assets\IMG\duke_java.png" alt="Unauthorized" />
+      </div>
+    );
   }
 
   return (
-    <div style={{}}>
-    <NavDash />
-    <h2 className="font-semibold p-3 text-center text-5xl">Administración estudiantes</h2>
-  
-    {isLoading ? (
-      <div className="flex justify-center align-middle"><img src="src\assets\loading.gif"></img></div>
-    ) : (
-      <div>
-        <Container>
-        <InputGroup>
-        <Form.Control
-          placeholder="Recipient's username"
-          aria-label="Recipient's username with two button addons"
-        />
-        <Button variant="outline-primary" onClick={() => setIsAddingStudent(true)}>Agregar estudiante</Button>
-        <Button variant="outline-primary" onClick={() => document.getElementById("importExcelInput").click()}>Agregar por excel</Button>
-      </InputGroup>
-        <input
-          type="file"
-          id="importExcelInput"
-          accept=".xls,.xlsx"
-          style={{ display: "none" }}
-          onChange={handleImportFromExcel}
-        />
-        </Container>
-        
-        {isAddingStudent && (
-          <StudentForm
-            student={newStudent}
-            onSave={handleAddStudent}
-            onCancel={handleCancel}
-          />
-        )}
-  
-        {isEditingStudent && selectedStudent && (
-          <StudentForm
-            student={newStudent}
-            onSave={handleAddStudent}
-            onCancel={handleCancel}
-          />
-        )}
-  
-  <StudentTable
-  students={filteredStudents}
-  onDelete={handleDeleteStudent}
-  onEdit={handleEditStudent}
-/>
+    <div>
+      <div ref={topOfPageRef}></div> {/* Ref para hacer scroll */}
+      <NavDash />
+      <h2 className="font-semibold p-3 text-center text-5xl">Administración estudiantes</h2>
 
-      </div>
-    )}
-  </div>
-  
+      {isLoading ? (
+        <div className="flex justify-center align-middle">
+          <img src="src\assets\loading.gif" alt="Loading" />
+        </div>
+      ) : (
+        <div>
+          <Container>
+            <InputGroup>
+              <Form.Control
+                placeholder="Recipient's username"
+                aria-label="Recipient's username with two button addons"
+              />
+              <Button variant="outline-primary" onClick={() => setIsAddingStudent(true)}>
+                Agregar estudiante
+              </Button>
+              <Button variant="outline-primary" onClick={() => document.getElementById("importExcelInput").click()}>
+              Agregar por excel
+              </Button>
+
+              </InputGroup>
+            <input
+              type="file"
+              id="importExcelInput"
+              accept=".xls,.xlsx"
+              style={{ display: "none" }}
+              onChange={handleImportFromExcel}
+            />
+          </Container>
+
+          {isAddingStudent && (
+            <StudentForm
+              student={newStudent}
+              onSave={handleAddStudent}
+              onCancel={handleCancel}
+            />
+          )}
+
+          {isEditingStudent && selectedStudent && (
+            <StudentForm
+              student={newStudent}
+              onSave={handleAddStudent}
+              onCancel={handleCancel}
+            />
+          )}
+
+          <StudentTable
+            students={filteredStudents}
+            onDelete={handleDeleteStudent}
+            onEdit={handleEditStudent}
+          />
+        </div>
+      )}
+    </div>
   );
 };
-export default Students
+
+export default Students;
