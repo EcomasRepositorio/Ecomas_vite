@@ -10,6 +10,8 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Link } from "react-router-dom";
 
+
+
 export const Students = () => {
   const { isAuthenticated, user } = useAuth0();
   
@@ -97,6 +99,9 @@ export const Students = () => {
     }
   };
 
+
+
+
   const handleEditStudent = (student) => {
     setNewStudent({
       Nombre: student.Nombre,
@@ -113,6 +118,9 @@ export const Students = () => {
     setIsEditingStudent(true);
   };
 
+
+
+  
   const handleCancel = () => {
     setIsAddingStudent(false);
     setIsEditingStudent(false);
@@ -189,7 +197,7 @@ export const Students = () => {
   return (
     <div style={{}}>
     <NavDash />
-    <h2 className="font-semibold p-3 text-center text-5xl">Administración estudiantes</h2>
+    <h2 className="font-semibold p-3 text-center text-5xl">Administración de estudiantes</h2>
   
     {isLoading ? (
       <div className="flex justify-center align-middle"><img src="src\assets\loading.gif"></img></div>

@@ -27,7 +27,7 @@ export const StudentForm = ({ student, onSave, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!studentData.DNI || !studentData.Nombre || !studentData.ActividadAcademica) {
+    if (!studentData.DNI || !studentData.Nombre || !studentData.ActividadAcademica ) {
       alert('DNI, Nombre y Actividad Académica son campos obligatorios.');
       return;
     }

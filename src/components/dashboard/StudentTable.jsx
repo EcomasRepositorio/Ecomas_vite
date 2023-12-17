@@ -54,6 +54,7 @@ export const StudentTable = ({ students, onDelete, onEdit }) => {
             <td>
               <button className="mx-2" onClick={() => onEdit(student)}>
                 <img src="src\assets\SVG\pencil-square.svg"></img>
+                
               </button>
               <button className="mx-2" onClick={() => onDelete(student.Codigo)}>
                 <img src="src\assets\SVG\trash2.svg"></img>
