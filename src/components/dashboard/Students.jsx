@@ -196,7 +196,7 @@ export const Students = () => {
   return (
     <div style={{}}>
     <NavDash />
-    <h2 className="font-semibold p-3 text-center text-5xl">Administración estudiantes</h2>
+    <h2 className="font-semibold p-3 text-center text-5xl">Administración de estudiantes</h2>
   
     {isLoading ? (
       <div className="flex justify-center align-middle"><img src="src\assets\loading.gif"></img></div>
