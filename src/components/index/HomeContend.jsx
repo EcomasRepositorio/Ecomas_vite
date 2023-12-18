@@ -12,18 +12,22 @@ const HomeContend = () => {
   return (
     <>
       <Carousel className="animate__animated animate__backInLeft">
-        <Carousel.Item>
-          <img src="src\assets\IMG\Banner-Web-001.png" />
+       <Carousel.Item>
+          <img src="src\assets\IMG\Banner-Web-004.png" />
         </Carousel.Item>
+
         <Carousel.Item>
           <img src="src\assets\IMG\Banner-Web-002.png" />
         </Carousel.Item>
+
         <Carousel.Item>
           <img src="src\assets\IMG\Banner-Web-003.png" />
         </Carousel.Item>
+
         <Carousel.Item>
-          <img src="src\assets\IMG\Banner-Web-004.png" />
+          <img src="src\assets\IMG\Banner-Web-001.png" />
         </Carousel.Item>
+
       </Carousel>
 
       <Container className="my-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
