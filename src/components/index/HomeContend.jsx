@@ -21,6 +21,9 @@ const HomeContend = () => {
         <Carousel.Item>
           <img src="src\assets\IMG\Banner-Web-003.png" />
         </Carousel.Item>
+        <Carousel.Item>
+          <img src="src\assets\IMG\Banner-Web-004.png" />
+        </Carousel.Item>
       </Carousel>
 
       <Container className="my-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
